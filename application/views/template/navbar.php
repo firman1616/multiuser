@@ -17,37 +17,48 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Administrator
-            </div>
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="<?= site_url('#') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
+            <?php
+            $role_id = $this->session->userdata('role_id');
+            $queryMenu = "SELECT a.id_menu, a.nama_menu FROM user_menu as a JOIN user_access_menu as b ON a.id_menu = b.menu_id WHERE b.role_id = $role_id ORDER BY b.menu_id ASC";
+            $menu = $this->db->query($queryMenu)->result_array();
+            // var_dump($menu);
+            // die;
+            ?>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                User
-            </div>
+            <!-- Looping Menu -->
+            <?php
+            foreach ($menu as $m) { ?>
+                <div class="sidebar-heading">
+                    <?= $m['nama_menu']; ?>
+                </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Sub menu -->
+                <?php
+                $menu_id = $m['id_menu'];
+                $querySubMenu = "SELECT * FROM user_sub_menu as a JOIN user_menu as b on a.menu_id = b.id_menu WHERE a.menu_id = $menu_id AND a.is_active = 1";
+                $subMenu = $this->db->query($querySubMenu)->result_array();
+                ?>
+
+                <?php
+                foreach ($subMenu as $sm) { ?>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= site_url($sm['url']) ?>">
+                            <i class="<?= $sm['icon'] ?>"></i>
+                            <span><?= $sm['title'] ?></span></a>
+                    </li>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+            <?php
+                }
+            }
+            ?>
+
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('#') ?>">
-                    <i class="fas fa-file-invoice"></i>
-                    <span>My Profile</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('#') ?>">
+                <a class="nav-link" href="<?= base_url('auth/logout') ?>">
                     <i class="fas fa-cogs"></i>
-                    <span>Master Barang</span></a>
+                    <span>Logout</span></a>
             </li>
 
             <!-- Divider -->
