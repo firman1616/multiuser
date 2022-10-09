@@ -49,14 +49,14 @@
                         <li class="nav-item ">
                         <?php }
                         ?>
-                        <a class="nav-link" href="<?= site_url($sm['url']) ?>">
+                        <a class="nav-link pb-0" href="<?= site_url($sm['url']) ?>">
                             <i class="<?= $sm['icon'] ?>"></i>
                             <span><?= $sm['title'] ?></span></a>
                         </li>
                         <!-- Divider -->
                     <?php
                 } ?>
-                    <hr class="sidebar-divider">
+                    <hr class="sidebar-divider mt-3">
                 <?php }
                 ?>
 
