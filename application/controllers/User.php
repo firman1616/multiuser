@@ -10,10 +10,7 @@ class User extends CI_Controller
     {
         parent::__construct();
 
-        // if ($this->session->userdata('status') == FALSE || $this->session->userdata('level') != 1) {
-
-        //     redirect(base_url("login"));
-        // }
+        is_logged_in();
     }
 
 

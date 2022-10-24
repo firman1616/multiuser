@@ -10,10 +10,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
 
-        // if ($this->session->userdata('status') == FALSE || $this->session->userdata('level') != 1) {
-
-        //     redirect(base_url("login"));
-        // }
+        is_logged_in();
     }
 
 
@@ -64,6 +61,7 @@ class Admin extends CI_Controller
 
     {
         // $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
         $data = [
 
             'name'    => $this->session->userdata('nama'),
@@ -75,5 +73,27 @@ class Admin extends CI_Controller
         ];
 
         $this->load->view('template/conten', $data);
+    }
+
+    public function changeaccess()
+    {
+        $menu_id = $this->input->post('menuId');
+        $role_id = $this->input->post('roleId');
+
+        $data = [
+            'role_id' => $role_id,
+            'menu_id' => $menu_id,
+        ];
+
+        $result = $this->db->get_where('user_access_menu', $data);
+
+        if ($result->num_rows() < 1) {
+            $this->db->insert('user_access_menu', $data);
+        } else {
+            $this->db->delete('user_access_menu', $data);
+        }
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Access Changed!
+          </div>');
     }
 }

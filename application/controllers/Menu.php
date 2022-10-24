@@ -10,12 +10,8 @@ class Menu extends CI_Controller
     {
         parent::__construct();
 
+        is_logged_in();
         $this->load->model('Menu_model', 'menu');
-
-        // if ($this->session->userdata('status') == FALSE || $this->session->userdata('level') != 1) {
-
-        //     redirect(base_url("login"));
-        // }
     }
 
 
