@@ -72,6 +72,8 @@ class Admin extends CI_Controller
             'menu' => $this->db->get('user_menu')->result_array(),
         ];
 
+        // $this->db->where('user_role','id_role !=', 1);
+
         $this->load->view('template/conten', $data);
     }
 
